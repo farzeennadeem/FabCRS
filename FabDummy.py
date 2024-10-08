@@ -136,7 +136,8 @@ def print_dummy_output(results_dir):
             file_content = file.read()
 
             # Print the content
-            print("File Content:\n", file_content)
+            # We print to stderr, so that the output appears in a Jupyter notebook.
+            print("File Content:\n", file_content, file=sys.stderr)
 
     except FileNotFoundError:
         print(f"File '{file_path}' not found.")
