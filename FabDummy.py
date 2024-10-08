@@ -121,3 +121,25 @@ def dummy_sif(config, testing_template='dummy_to_be_tested', skip_runs=False, **
   scores = vvp.sif_vvp("{}/test_subject_{}".format(env.local_results, results_dir), "{}/sif_{}".format(env.local_results, results_dir), compare_dummy_results, dummy_avg)
 
   print("SCORES:",scores)
+
+
+@task
+def print_dummy_output(results_dir):
+    update_environment()
+    # Open the file in read mode
+    file_path = f"{env.local_results}/{results_dir}/out.txt"
+    print(file_path)
+
+    try:
+        with open(file_path, 'r') as file:
+            # Read the content of the file
+            file_content = file.read()
+
+            # Print the content
+            print("File Content:\n", file_content)
+
+    except FileNotFoundError:
+        print(f"File '{file_path}' not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
