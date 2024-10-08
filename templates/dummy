@@ -6,3 +6,4 @@ $run_prefix
 echo "Starting dummy job, which will print the contents of dummy.txt."
 /bin/cat dummy.txt
 /bin/cat dummy.txt > out.txt
+/bin/date >> out.txt
