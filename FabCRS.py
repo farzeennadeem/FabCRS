@@ -12,7 +12,7 @@ except ImportError:
     from base.fab import *
 
 # Add local script, blackbox and template path.
-add_local_paths("FabDummy")
+add_local_paths("FabCRS")
 
 
 @task
