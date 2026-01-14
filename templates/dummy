@@ -3,7 +3,7 @@ cd $job_results
 $run_prefix
 
 /usr/bin/env > env.log
-echo "Starting dummy job, which will print the contents of dummy.txt."
+echo "Starting CRS job, which will print the contents of dummy.txt."
 /bin/cat dummy.txt
 /bin/cat dummy.txt > out.txt
 /bin/date >> out.txt
