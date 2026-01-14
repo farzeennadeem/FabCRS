@@ -1,0 +1,7 @@
+{
+  "timestamp": "2026-01-14T19:34:07.255504+00:00",
+  "topology_file": "examples/topology.yml",
+  "scenario_file": "examples/scenario.yml",
+  "duration": 10,
+  "status": "success"
+}
