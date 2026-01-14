@@ -1,4 +1,4 @@
-# FabDummy Exec Template: 
+# FabCRS Exec Template: 
 cd $job_results
 $run_prefix
 
