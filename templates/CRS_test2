@@ -1,0 +1,23 @@
+# FabCRS Exec Template: 
+cd $job_results
+$run_prefix
+
+# Create a unique output folder inside the FabSim run directory
+TS=$(/bin/date +"%Y%m%d_%H%M%S")
+OUTDIR="run_${TS}"
+/bin/mkdir -p "$OUTDIR"
+
+/usr/bin/env > env.log
+echo "Starting CRS job: running cyberrangesim.py test"
+
+# Run the core script (MVP so far: just write run_meta.json + kpis.json)
+python3 cyberrangesim.py \
+  --topology topology.yml \
+  --scenario scenario.yml \
+  --outdir "$OUTDIR"
+echo "CRS job finished"
+
+ls -la > file_list.log # Can remove this later, currently used for debugging
+
+
+

@@ -102,3 +102,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# FabSim outputs / run artefacts
+outputs/
+results/
+**/run_*/
+*.log
+

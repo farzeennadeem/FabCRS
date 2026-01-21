@@ -34,6 +34,15 @@ def start(config, **args):
     job(dict(script='CRS_test', job_wall_time='0:15:0', memory='2G'), args)
 
 @task
+def run_crs(config, **args):
+    """Run a CRS simulation using dummy job script."""
+    update_environment(args)
+    with_config(config)
+    execute(put_configs, config)
+    job(dict(script='CRS_test2', job_wall_time='0:15:0', memory='2G'), args)
+
+
+@task
 def dummy(config, **args):
     """Submit a Dummy job to the remote queue.
     The job results will be stored with a name pattern as defined in the environment,
