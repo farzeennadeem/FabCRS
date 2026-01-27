@@ -1,5 +1,12 @@
 {
-  "attack": "ddos",
+  "attack": {
+    "type": "http_get_flood",
+    "target_service": "web",
+    "rps": 2000,
+    "burstiness": {
+      "mode": "constant"
+    }
+  },
   "availability_pct": 100.0,
   "latency_ms": 0,
   "notes": "Dummy run \u2013 no simulation yet"

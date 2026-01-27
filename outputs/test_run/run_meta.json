@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-01-21T14:10:04.612398+00:00",
-  "topology_file": "examples/topology.yml",
-  "scenario_file": "examples/scenario.yml",
-  "duration": 10,
+  "timestamp": "2026-01-27T15:24:03.780895+00:00",
+  "topology_file": "config_files/http_flood/topology.yml",
+  "scenario_file": "config_files/http_flood/scenario.yml",
+  "duration": null,
   "status": "success"
 }

@@ -1,0 +1,26 @@
+scenario_name: http_get_flood_v1
+seed: 42
+
+sim:
+  timestep_s: 1
+  duration_s: 120
+
+attack:
+  type: http_get_flood
+  target_service: web
+  rps: 2000
+  burstiness:
+    mode: constant
+
+service_model:
+  capacity_rps: 1200
+  queue_size: 3000
+  base_load_rps: 200
+
+defences:
+  rate_limit:
+    enabled: true
+    limit_rps: 1200
+  scrubbing:
+    enabled: false
+    reduction_pct: 30

@@ -7,8 +7,10 @@ TS=$(/bin/date +"%Y%m%d_%H%M%S")
 OUTDIR="run_${TS}"
 /bin/mkdir -p "$OUTDIR"
 
+SCENARIO_NAME="${config:-unknown}"
 /usr/bin/env > env.log
-echo "Starting CRS job: running cyberrangesim.py test"
+echo "Starting CRS job: running ${SCENARIO_NAME}"
+
 
 # Run the core script (MVP so far: just write run_meta.json + kpis.json)
 python3 cyberrangesim.py \

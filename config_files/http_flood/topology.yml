@@ -1,0 +1,11 @@
+nodes:
+  web:
+    role: service
+    capacity_rps: 1200
+    queue_size: 3000
+    base_load_rps: 200
+  db:
+    role: dependency
+
+edges:
+  - [web, db]

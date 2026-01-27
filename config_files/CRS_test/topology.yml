@@ -1,0 +1,5 @@
+nodes:
+  - web
+  - db
+edges:
+  - [web, db]
