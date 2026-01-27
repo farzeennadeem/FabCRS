@@ -46,17 +46,18 @@ def run(topology_path, scenario_path, outdir):
 
 if __name__ == "__main__":
     # This section was used when we ran this file directly for testing.
+    '''
     run(
-        '''
         "examples/topology.yml",
         "examples/scenario.yml",
         "outputs/test_run"
-        '''
+        
         "config_files/http_flood/topology.yml",
         "config_files/http_flood/scenario.yml",
         "outputs/test_run"
     )
-    
+    '''   
+
     # Command line argument parsing
     parser = argparse.ArgumentParser()
     parser.add_argument("--topology", required=True)

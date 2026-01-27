@@ -9,7 +9,7 @@ try:
     from fabsim.base.fab import *
     from fabsim.VVP import vvp
 except ImportError:
-    from base.fab import *
+    from base.fab import * # pyright: ignore[reportMissingImports]
 
 # Add local script, blackbox and template path.
 add_local_paths("FabCRS")
