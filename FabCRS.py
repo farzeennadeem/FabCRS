@@ -40,7 +40,7 @@ def run_crs(config, **args):
     with_config(config)
     execute(put_configs, config)
     # Copy cyberrangesim.py from plugin root to job results
-    put(get_plugin_path('FabCRS') + '/cyberrangesim.py', env.job_results_dir + '/cyberrangesim.py')
+    put(get_plugin_path('FabCRS') + '/cyberrangesim.py', env.job_results + '/cyberrangesim.py')
     job(dict(script='CRS_test2', job_wall_time='0:15:0', memory='2G'), args)
 
 @task
