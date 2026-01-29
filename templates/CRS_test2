@@ -3,7 +3,7 @@ cd $job_results
 $run_prefix
 
 # Copy cyberrangesim.py from FabCRS plugin root using absolute path
-cp $home_path/../plugins/FabCRS/cyberrangesim.py . 2>/dev/null || cp ./cyberrangesim.py .
+#cp $home_path/../plugins/FabCRS/cyberrangesim.py . 2>/dev/null || cp ./cyberrangesim.py .
 
 # Create a unique output folder inside the FabSim run directory
 TS=$(/bin/date +"%d_%m_%Y_%H%M%S")
