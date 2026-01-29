@@ -3,7 +3,7 @@ cd $job_results
 $run_prefix
 
 # Copy cyberrangesim.py from FabCRS plugin root
-cp $fabcrs_location/cyberrangesim.py .
+#cp $fabcrs_location/cyberrangesim.py . NOT WORKING DUE TO PERMISSION ERROR ON MAC
 
 # Create a unique output folder inside the FabSim run directory
 TS=$(/bin/date +"%d_%m_%Y_%H%M%S")
