@@ -1,4 +1,5 @@
-# NOTE: This is a staged copy for FabSim runs. Edit the root cyberrangesim.py instead.
+# NOTE: Edit the root cyberrangesim.py if you find this in the config folder
+#MAIN 
 
 import json
 import yaml

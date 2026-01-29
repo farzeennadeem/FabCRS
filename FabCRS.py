@@ -41,7 +41,23 @@ def run_crs(config, **args):
     execute(put_configs, config)
     job(dict(script='CRS_test2', job_wall_time='0:15:0', memory='2G'), args)
 
+@task
+def crs_generate_dashboard(config, run=None, **args):
+    """
+    Generate dashboard.html for a specific run folder.
+    Usage:
+      fabsim localhost crs_generate_dashboard:<group> run=<run_folder>
+    """
+    update_environment(args)
+    with_config(config)
+    if run is None:
+        print("Please provide a run folder using run=<run_folder>")
+        return
+    from FabCRS.FabCRS import generate_dashboard
+    generate_dashboard(run)
 
+
+# -----------------DUMMY TASK TEMPLATES-------------------------
 @task
 def dummy(config, **args):
     """Submit a Dummy job to the remote queue.

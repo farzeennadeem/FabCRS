@@ -2,8 +2,11 @@
 cd $job_results
 $run_prefix
 
+# Copy cyberrangesim.py from the FabCRS plugin root
+cp ../../../../plugins/FabCRS/cyberrangesim.py .
+
 # Create a unique output folder inside the FabSim run directory
-TS=$(/bin/date +"%Y%m%d_%H%M%S")
+TS=$(/bin/date +"%d_%m_%Y_%H%M%S")
 OUTDIR="run_${TS}"
 /bin/mkdir -p "$OUTDIR"
 
