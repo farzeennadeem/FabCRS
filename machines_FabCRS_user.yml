@@ -1,0 +1,101 @@
+# Copy this file as machines_user.yml, and fill in your details.
+# Details given in the default dictionary will override default settings in machines.yml
+# Details given in per-machine dictionaries will override machine settings in machines.yml
+
+default:
+  local_results: /Users/farznadz/Desktop/FYP_FILES/Code/FabSim3/results
+  local_configs: /Users/farznadz/Desktop/FYP_FILES/Code/FabSim3/config_files
+  username: farznadz
+  # home_path_template: "/home/$username"
+  # home_path_template: "/Users/$username"  # for OSX users
+  manual_gsissh: false # Allows to switch between SSH (default) and GSISSH login.
+  port: 22
+  enable_template_cache: false     # Global default
+  template_cache_size: 2000        # Optional cache size
+
+  home_path_template: "/Users/farznadz/Desktop/FYP_FILES/Code/FabSim3/localhost_exe"
+  virtual_env_path: /Users/farznadz/Desktop/FYP_FILES/Code/FabSim3/VirtualEnv
+localhost:
+  username: farznadz
+  cores: 1              # Total cores user requests
+  corespernode: 1       # Local hardware: 4-8 cores/system
+  cpuspertask: 1        # Cores allocated per task
+  taskspernode: 1       # Tasks running per system
+  virtual_env_path: /Users/farznadz/Desktop/FYP_FILES/Code/FabSim3/VirtualEnv
+  enable_template_cache: false     # Disable for testing
+  template_cache_size: 2000        # Optional cache size
+  # run_prefix_commands:           # Startup commands on ssh connection
+  #  - command 1                   # e.g., source ~/.bashrc
+  #  - command 2                   # e.g., source ~/.zshrc
+
+  home_path_template: "/Users/farznadz/Desktop/FYP_FILES/Code/FabSim3/localhost_exe"
+  fabcrs_location: "/Users/farznadz/Desktop/FYP_FILES/Code/FabSim3/plugins/FabCRS"
+
+supermuc2:
+  username: ab12cde
+  project: fg34hi
+  namd_exec: /lrz/sys/applications/namd/2.10/mpi.ibmP2/namd2
+  redispwd: multiple # Password set in the redisexec directory.
+  manual_gsissh: true   # Switches to GSISSH login from SSH.
+  port: 2222
+
+bluejoule:
+  username: abc12-def01
+  groupname: abc01
+  project: ABC012
+  namd_exec: /gpfs/packages/ibm/namd/2.9/bin/namd2
+  ensemble_dir: rep0/replicas
+
+qcg:
+  username: <your-username>
+  flee_location: $home_path/flee-release
+
+eagle_vecma:
+  username: <your-username>
+  flee_location: $home_path/flee-release
+
+eagle_hidalgo:
+  username: <your-username>
+  flee_location: $home_path/flee-release
+
+archer2:
+  username: <your-username>
+  manual_ssh: true
+  remote: archer2 #add host to ~/.ssh/config file
+  budget: <your-budget>
+  project: <your-project>
+  job_wall_time: '0-00:10:00'
+  job_dispatch: 'sbatch'
+  partition_name: "standard"
+  qos_name: "standard"
+  # SLURM resources allocation
+  cores: 128            # Total cores user requests
+  corespernode: 128     # ARCHER2 hardware: 128 cores/node
+  cpuspertask: 2        # 2 cores per task (safer)
+  taskspernode: 64      # 64 tasks per node (128 ÷ 2 = 64)
+  nb_process: 4         # Good starting point (2/3 of CPU cores)
+  # Radical task allocation
+  ranks: 1
+  coresperrank: 1
+  runtime: 60
+  enable_template_cache: true      # Enable for HPC jobs
+  template_cache_size: 10000       # Cache for big jobs 10,000-50,000
+  virtual_env_path: /work/<project>/<project>/<username>/VirtualEnv
+
+marenostrum4:
+  username: pr1emk01
+  fabric_dir: FabSim3
+  corespernode: 46
+  taskpersocket: 23
+  cores: 1
+  queue_name: "debug" # or "bsc_case"
+  memconfig_name: highmem
+
+training_hidalgo:
+  username: <your-username>
+  home_path_template: /work/<your-username>
+  partition_name: hidalgo
+
+myriad:
+  username: <your-UCL-ID>
+  workdir: <specify-a-work-dir>
