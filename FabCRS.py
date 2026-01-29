@@ -37,6 +37,7 @@ def start(config, **args):
 def run_crs(config, **args):
     """Run a CRS simulation using dummy job script."""
     update_environment(args)
+    env.fabcrs_location = get_plugin_path('FabCRS')  # Set custom environment variable
     with_config(config)
     execute(put_configs, config)
     job(dict(script='CRS_test2', job_wall_time='0:15:0', memory='2G'), args)
