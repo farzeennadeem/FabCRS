@@ -58,6 +58,7 @@ def crs_generate_dashboard(config, run=None, **args):
     generate_dashboard(run)
 
     # Pass 'run' into the template environment
+    args["results_group"] = config
     args["run"] = run
 
     #DONT put_configs here as we are reading existing results

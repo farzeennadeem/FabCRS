@@ -2,24 +2,33 @@
 cd $job_results
 $run_prefix
 
+RESULTS_GROUP="${results_group:-}"
 RUN_FOLDER="${run:-}"
 
+if [ -z "$RESULTS_GROUP" ]; then
+  echo "ERROR: results_group not provided."
+  exit 1
+fi
+
 if [ -z "$RUN_FOLDER" ]; then
-  echo "ERROR: No run folder provided. Use: run=run_DD_MM_YYYY_HHMMSS from your results"
+  echo "ERROR: run not provided. Use run=run_YYYYMMDD_HHMMSS"
   exit 1
 fi
 
-if [ ! -d "$RUN_FOLDER" ]; then
-  echo "ERROR: Run folder not found: $job_results/$RUN_FOLDER"
-  echo "Available runs:"
-  ls -1 | grep '^run_' || true
+RUN_DIR="$job_results/$RESULTS_GROUP/$RUN_FOLDER"
+
+if [ ! -d "$RUN_DIR" ]; then
+  echo "ERROR: Run directory not found: $RUN_DIR"
+  echo "Available groups in $job_results:"
+  ls -1 "$job_results" || true
+  echo "Available runs in $job_results/$RESULTS_GROUP:"
+  ls -1 "$job_results/$RESULTS_GROUP" || true
   exit 1
 fi
 
-echo "Generating dashboard for: $job_results/$RUN_FOLDER"
+echo "Generating dashboard in: $RUN_DIR"
 
 # Run dashboard generator from plugin location
 python3 "$fabcrs_location/gen_db.py" \
-  --run_dir "$job_results/$RUN_FOLDER"
-
+  --run_dir "$RUN_DIR"
 echo "Dashboard generation finished"
