@@ -183,12 +183,7 @@ def run(topology_path, scenario_path, outdir):
     os.makedirs(outdir, exist_ok=True)
 
     topology = load_yaml(topology_path)
-    scenario = load_yaml(scenario_path)
-
-    # Placeholder simulation
-    start_time = time.time()
-
-    
+    scenario = load_yaml(scenario_path)  
 
     run_meta = {
         "timestamp": datetime.now(timezone.utc).isoformat(),

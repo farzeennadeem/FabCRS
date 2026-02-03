@@ -1,0 +1,25 @@
+# FabDummy Exec Template: 
+cd $job_results
+$run_prefix
+
+RUN_FOLDER="${run:-}"
+
+if [ -z "$RUN_FOLDER" ]; then
+  echo "ERROR: No run folder provided. Use: run=run_DD_MM_YYYY_HHMMSS from your results"
+  exit 1
+fi
+
+if [ ! -d "$RUN_FOLDER" ]; then
+  echo "ERROR: Run folder not found: $job_results/$RUN_FOLDER"
+  echo "Available runs:"
+  ls -1 | grep '^run_' || true
+  exit 1
+fi
+
+echo "Generating dashboard for: $job_results/$RUN_FOLDER"
+
+# Run dashboard generator from plugin location
+python3 "$fabcrs_location/gen_db.py" \
+  --run_dir "$job_results/$RUN_FOLDER"
+
+echo "Dashboard generation finished"

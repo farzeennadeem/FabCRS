@@ -57,6 +57,11 @@ def crs_generate_dashboard(config, run=None, **args):
     from FabCRS.FabCRS import generate_dashboard
     generate_dashboard(run)
 
+    # Pass 'run' into the template environment
+    args["run"] = run
+
+    #DONT put_configs here as we are reading existing results
+    job(dict(script="crs_db", job_wall_time="0:15:0", memory="2G"), args)
 
 # -----------------DUMMY TASK TEMPLATES-------------------------
 @task
