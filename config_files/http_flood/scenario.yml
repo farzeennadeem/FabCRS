@@ -19,7 +19,7 @@ service_model:
 
 defences:
   rate_limit:
-    enabled: true
+    enabled: false
     limit_rps: 1200
   scrubbing:
     enabled: false
