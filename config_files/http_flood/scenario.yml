@@ -2,25 +2,38 @@ scenario_name: http_get_flood_v1
 seed: 42
 
 sim:
-  timestep_s: 1
-  duration_s: 120
+  timestep_s: 1       # time step granularity (seconds)
+  duration_s: 120     # total simulation length (seconds)
 
 attack:
   type: http_get_flood
-  target_service: web
-  rps: 2000
+  target_service: web # name of service/node to target
+  rps: 2000           # attack request rate (requests/sec)
   burstiness:
-    mode: constant
+    mode: constant    # constant | pulse
+    pulse_on_s: 5     # if mode=pulse: seconds ON
+    pulse_off_s: 5    # if mode=pulse: seconds OFF
+  # attack timing to create phases
+  start_s: 5             # attack begins at t=5s (before that: baseline)
+  end_s: 95              # attack ends at t=95s (after that: recovery)
+  ramp_up_s: 10          # ramp from 0 -> full over first 10s of attack (0 disables)
+  ramp_down_s: 10        # ramp from full -> 0 over last 10s of attack (0 disables)
 
 service_model:
-  capacity_rps: 1200
-  queue_size: 3000
-  base_load_rps: 200
+  capacity_rps: 1200  # service can process up to this per second
+  queue_size: 3000    # max queued backlog before drops occur
+  base_load_rps: 200  # normal background traffic (requests/sec)
+  initial_queue: 0    # start backlog (0 usually)
 
 defences:
   rate_limit:
-    enabled: false
-    limit_rps: 1200
+    enabled: false    # caps total incoming traffic
+    limit_rps: 1200   # max allowed requests/sec (if enabled)
   scrubbing:
-    enabled: false
-    reduction_pct: 30
+    enabled: false    # reduces attack portion before it hits service
+    reduction_pct: 30 # percent of attack removed (0-100)
+
+latency_model:
+  base_latency_ms: 20   # latency at zero queue pressure
+  latency_k: 80         # how strongly latency grows with queue/capacity
+  max_latency_ms: 1000  # optional clamp (set null to disable)
