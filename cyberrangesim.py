@@ -28,7 +28,33 @@ def _as_bool(x, default=False):
             return False
     return default
 
-    
+def compute_kpis_from_telemetry(telemetry, scenario):
+    sim_cfg = scenario.get("sim", {})
+    timestep_s = int(sim_cfg.get("timestep_s", 1))
+
+    total_in = sum(row["incoming_rps"] * timestep_s for row in telemetry)
+    total_served = sum(row["served_rps"] * timestep_s for row in telemetry)
+    total_dropped = sum(row["dropped_rps"] * timestep_s for row in telemetry)
+
+    availability_pct = 100.0 if total_in <= 0 else (100.0 * total_served / total_in)
+
+    #latency_kpi_ms = max latency OR p95 latency (worst-case experience for 95% of users while filtering out extreme 'one-time' spikes)
+    latencies = [row["latency_ms"] for row in telemetry] or [0.0]
+    latencies_sorted = sorted(latencies)
+    p95_idx = int(0.95 * (len(latencies_sorted) - 1))
+    latency_kpi_ms = latencies_sorted[p95_idx]
+
+    attack_cfg = scenario.get("attack", {})
+    return {
+        "attack": attack_cfg,
+        "availability_pct": round(availability_pct, 3),
+        "latency_kpi_ms": round(latency_kpi_ms, 3),
+        "total_dropped": round(total_dropped, 3),
+        "total_incoming": round(total_in, 3),
+        "total_served": round(total_served, 3),
+    }
+
+
 def generate_telemetry(topology, scenario):
     """
     Minimal time-series output for MVP
@@ -49,6 +75,8 @@ def generate_telemetry(topology, scenario):
         duration_s = scenario.get("duration", 60) #fallback to legacy
     duration_s = int(duration_s)
     timestep_s = int(sim_cfg.get("timestep_s", 1))
+    if timestep_s <= 0:
+        timestep_s = 1
 
     #workload parameters
     base_load_rps = float(svc_cfg.get("base_load_rps", 0.0))
@@ -80,9 +108,11 @@ def generate_telemetry(topology, scenario):
     scrub_enabled = _as_bool(scrubbing_cfg.get("enabled", False), default=False)
     scrub_pct = float(scrubbing_cfg.get("reduction_pct", 0))
 
-    #latency model (kept simple to create sensible curve)
-    base_latency_ms = 20.0
-    latency_k = 80.0
+    base_latency_ms = float(lat_cfg.get("base_latency_ms", 20.0))
+    latency_k = float(lat_cfg.get("latency_k", 80.0))
+    max_latency_ms = lat_cfg.get("max_latency_ms", None)
+    if max_latency_ms is not None:
+        max_latency_ms = float(max_latency_ms)
 
     telemetry = []
 
@@ -158,12 +188,7 @@ def run(topology_path, scenario_path, outdir):
     # Placeholder simulation
     start_time = time.time()
 
-    kpis = {
-        "attack": scenario.get("attack"),
-        "availability_pct": 100.0,
-        "latency_ms": 0,
-        "notes": "Dummy run – no simulation yet"
-    }
+    
 
     run_meta = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -173,8 +198,11 @@ def run(topology_path, scenario_path, outdir):
         "status": "success"
     }
 
-    # Generate telemetry (time series)
+    # Generate telemetry
     telemetry = generate_telemetry(topology, scenario)
+
+    # Compute KPIs from telemetry
+    kpis = compute_kpis_from_telemetry(telemetry, scenario)
 
     # Write outputs
     with open(os.path.join(outdir, "kpis.json"), "w") as f:
