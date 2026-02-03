@@ -50,12 +50,8 @@ def crs_generate_dashboard(config, run=None, **args):
       fabsim localhost crs_generate_dashboard:<group> run=<run_folder>
     """
     update_environment(args)
-    with_config(config)
     if run is None:
-        print("Please provide a run folder using run=<run_folder>")
-        return
-    from FabCRS.FabCRS import generate_dashboard
-    generate_dashboard(run)
+        raise Exception("Please provide run=<run_folder>, e.g. run=run_DD_MM_YYYY_HHMMSS")
 
     # Pass 'run' into the template environment
     args["results_group"] = config
