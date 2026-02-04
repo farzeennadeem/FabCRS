@@ -37,6 +37,6 @@ fi
 echo "Generating dashboard in: $RUN_DIR"
 
 # Run dashboard generator from plugin location
-python3 "$fabcrs_location/gen_db.py" \
-  --run_dir "$RUN_DIR"
+python3 gen_db.py \
+  --run-dir "$RUN_DIR"
 echo "Dashboard generation finished"

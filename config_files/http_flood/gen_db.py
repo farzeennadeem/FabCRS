@@ -13,6 +13,8 @@ import json
 import os
 import sys
 from datetime import datetime
+from typing import Optional
+
 
 def load_json(path: str):
     with open(path, "r") as f:
@@ -29,13 +31,13 @@ def safe_get(d, *keys, default=None):
 
 def ensure_plotly():
     try:
-        import plotly.graph_objects as go  # noqa: F401
-        from plotly.offline import plot as plotly_plot  # noqa: F401
+        import plotly.graph_objects as go
+        from plotly.offline import plot as plotly_plot
         return True
     except Exception:
         return False
 
-def build_dashboard_html(run_dir: str, telemetry: list, kpis: dict, run_meta: dict | None):
+def build_dashboard_html(run_dir: str, telemetry: list, kpis: dict, run_meta: Optional[dict]):
     import plotly.graph_objects as go
     from plotly.offline import plot as plotly_plot
 
