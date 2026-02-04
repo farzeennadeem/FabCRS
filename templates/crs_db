@@ -2,27 +2,35 @@
 cd $job_results
 $run_prefix
 
-RESULTS_GROUP="${results_group:-}"
-RUN_FOLDER="${run:-}"
+RESULTS_GROUP="$results_group"
+RUN_FOLDER="$run"
 
-if [ -z "$RESULTS_GROUP" ]; then
-  echo "ERROR: results_group not provided."
-  exit 1
-fi
+echo "DEBUG job_results=$job_results"
+echo "DEBUG results_group=$RESULTS_GROUP"
+echo "DEBUG run=$RUN_FOLDER"
 
 if [ -z "$RUN_FOLDER" ]; then
   echo "ERROR: run not provided. Use run=run_YYYYMMDD_HHMMSS"
   exit 1
 fi
 
-RUN_DIR="$job_results/$RESULTS_GROUP/$RUN_FOLDER"
+# Case A: job_results already points to .../results/<group>
+if [ -d "$job_results/$RUN_FOLDER" ]; then
+  RUN_DIR="$job_results/$RUN_FOLDER"
 
-if [ ! -d "$RUN_DIR" ]; then
-  echo "ERROR: Run directory not found: $RUN_DIR"
-  echo "Available groups in $job_results:"
+# Case B: job_results points to .../results (needs group)
+elif [ -n "$RESULTS_GROUP" ] && [ -d "$job_results/$RESULTS_GROUP/$RUN_FOLDER" ]; then
+  RUN_DIR="$job_results/$RESULTS_GROUP/$RUN_FOLDER"
+
+else
+  echo "ERROR: Run directory not found."
+  echo "Tried:"
+  echo "  $job_results/$RUN_FOLDER"
+  if [ -n "$RESULTS_GROUP" ]; then
+    echo "  $job_results/$RESULTS_GROUP/$RUN_FOLDER"
+  fi
+  echo "Available in job_results:"
   ls -1 "$job_results" || true
-  echo "Available runs in $job_results/$RESULTS_GROUP:"
-  ls -1 "$job_results/$RESULTS_GROUP" || true
   exit 1
 fi
 

@@ -50,12 +50,17 @@ def crs_generate_dashboard(config, run=None, **args):
       fabsim localhost crs_generate_dashboard:<group> run=<run_folder>
     """
     update_environment(args)
-    if run is None:
+
+    run_folder = args.get("run")
+    if not run_folder:
         raise Exception("Please provide run=<run_folder>, e.g. run=run_DD_MM_YYYY_HHMMSS")
 
-    # Pass 'run' into the template environment
+    with_config("http_flood")
+
     args["results_group"] = config
-    args["run"] = run
+    args["run"] = run_folder
+
+    print("DEBUG kwargs args =", args)
 
     #DONT put_configs here as we are reading existing results
     job(dict(script="crs_db", job_wall_time="0:15:0", memory="2G"), args)
