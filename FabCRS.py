@@ -43,7 +43,7 @@ def run_crs(config, **args):
     job(dict(script='CRS_test2', job_wall_time='0:15:0', memory='2G'), args)
 
 @task
-def crs_generate_dashboard(config, run=None, **args):
+def crs_generate_dashboard(config, **args):
     """
     Generate dashboard.html for a specific run folder.
     Usage:
