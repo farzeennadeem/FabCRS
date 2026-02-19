@@ -36,6 +36,23 @@ fi
 
 echo "Generating dashboard in: $RUN_DIR"
 
+# Ensure topology.yml is present in the run folder for the topology map
+# Prefer the run's own topology.yml if already there.
+if [ ! -f "$RUN_DIR/topology.yml" ]; then
+  # Try copying from the scenario config that FabSim staged into the run folder
+  if [ -f "$RUN_DIR/../topology.yml" ]; then
+    cp "$RUN_DIR/../topology.yml" "$RUN_DIR/topology.yml"
+    echo "Copied topology.yml from parent folder into run folder."
+  elif [ -f "$job_results/topology.yml" ]; then
+    cp "$job_results/topology.yml" "$RUN_DIR/topology.yml"
+    echo "Copied topology.yml from job_results into run folder."
+  else
+    echo "WARNING: topology.yml not found to copy. Topology animation may not render."
+  fi
+else
+  echo "topology.yml already present in run folder."
+fi
+
 # Run dashboard generator from plugin location
 '$virtual_env_path'/bin/python3 gen_db.py \
   --run-dir "$RUN_DIR"
