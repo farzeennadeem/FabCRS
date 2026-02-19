@@ -231,6 +231,7 @@ def generate_telemetry_malware_spread(topology, scenario):
             "infected_nodes": int(infected),
             "recovered_nodes": int(recovered),
             "new_infections": int(len(newly_infected)),
+            "node_states": dict(state),
         })
 
     return telemetry

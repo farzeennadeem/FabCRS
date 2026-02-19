@@ -14,23 +14,35 @@ if [ -z "$RUN_FOLDER" ]; then
   exit 1
 fi
 
-# Case A: job_results already points to .../results/<group>
-if [ -d "$job_results/$RUN_FOLDER" ]; then
-  RUN_DIR="$job_results/$RUN_FOLDER"
+JOB_RESULTS="$job_results"
 
-# Case B: job_results points to .../results (needs group)
-elif [ -n "$RESULTS_GROUP" ] && [ -d "$job_results/$RESULTS_GROUP/$RUN_FOLDER" ]; then
-  RUN_DIR="$job_results/$RESULTS_GROUP/$RUN_FOLDER"
+# If job_results looks like .../results/<some_group>, set RESULTS_ROOT to .../results
+RESULTS_ROOT="$JOB_RESULTS"
+if [ "$(basename "$JOB_RESULTS")" != "results" ]; then
+  PARENT="$(dirname "$JOB_RESULTS")"
+  if [ "$(basename "$PARENT")" = "results" ]; then
+    RESULTS_ROOT="$PARENT"
+  fi
+fi
+
+echo "DEBUG normalized RESULTS_ROOT=$RESULTS_ROOT"
+
+# --- Resolve RUN_DIR ---
+# Case A: job_results already points to the correct .../results/<group>
+if [ -d "$JOB_RESULTS/$RUN_FOLDER" ] && [ "$(basename "$JOB_RESULTS")" = "$RESULTS_GROUP" ]; then
+  RUN_DIR="$JOB_RESULTS/$RUN_FOLDER"
+
+# Case B: use normalized results root: .../results/<group>/<run>
+elif [ -n "$RESULTS_GROUP" ] && [ -d "$RESULTS_ROOT/$RESULTS_GROUP/$RUN_FOLDER" ]; then
+  RUN_DIR="$RESULTS_ROOT/$RESULTS_GROUP/$RUN_FOLDER"
 
 else
   echo "ERROR: Run directory not found."
   echo "Tried:"
-  echo "  $job_results/$RUN_FOLDER"
-  if [ -n "$RESULTS_GROUP" ]; then
-    echo "  $job_results/$RESULTS_GROUP/$RUN_FOLDER"
-  fi
-  echo "Available in job_results:"
-  ls -1 "$job_results" || true
+  echo "  $JOB_RESULTS/$RUN_FOLDER  (only valid if job_results is the correct group)"
+  echo "  $RESULTS_ROOT/$RESULTS_GROUP/$RUN_FOLDER"
+  echo "Available groups in RESULTS_ROOT:"
+  ls -1 "$RESULTS_ROOT" || true
   exit 1
 fi
 
