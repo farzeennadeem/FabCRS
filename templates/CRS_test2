@@ -16,7 +16,7 @@ echo "Starting CRS job: running ${SCENARIO_NAME}"
 
 
 # Run the core script (MVP so far: just write run_meta.json + kpis.json)
-python3 cyberrangesim.py \
+'$virtual_env_path'/bin/python3 cyberrangesim.py \
   --topology topology.yml \
   --scenario scenario.yml \
   --outdir "$OUTDIR"
