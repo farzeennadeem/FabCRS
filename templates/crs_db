@@ -65,7 +65,14 @@ else
   echo "topology.yml already present in run folder."
 fi
 
-# Run dashboard generator from plugin location
-'$virtual_env_path'/bin/python3 gen_db.py \
+# Prefer generator script located in the results_group folder
+GEN_DB_SCRIPT="$RESULTS_ROOT/$RESULTS_GROUP/gen_db.py"
+if [ ! -f "$GEN_DB_SCRIPT" ]; then
+  # Fallback: if job_results is already the group folder
+  GEN_DB_SCRIPT="$job_results/gen_db.py"
+fi
+
+echo "DEBUG using gen_db script: $GEN_DB_SCRIPT"
+
+'$virtual_env_path'/bin/python3 "$GEN_DB_SCRIPT" \
   --run-dir "$RUN_DIR"
-echo "Dashboard generation finished"
