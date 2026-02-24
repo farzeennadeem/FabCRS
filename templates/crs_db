@@ -65,11 +65,11 @@ else
   echo "topology.yml already present in run folder."
 fi
 
-# Prefer generator script located in the results_group folder
-GEN_DB_SCRIPT="$RESULTS_ROOT/$RESULTS_GROUP/gen_db.py"
+GEN_DB_SCRIPT="$fabcrs_location/gen_db.py"
+
 if [ ! -f "$GEN_DB_SCRIPT" ]; then
-  # Fallback: if job_results is already the group folder
-  GEN_DB_SCRIPT="$job_results/gen_db.py"
+    # Fallback to the local group folder just in case
+    GEN_DB_SCRIPT="$RESULTS_ROOT/$RESULTS_GROUP/gen_db.py"
 fi
 
 echo "DEBUG using gen_db script: $GEN_DB_SCRIPT"
