@@ -40,7 +40,7 @@ def run_crs(config, **args):
     update_environment(args)
     with_config(config)
     execute(put_configs, config)
-    job(dict(script='CRS_test2', job_wall_time='0:15:0', memory='2G'), args)
+    job(dict(script='crs_run', job_wall_time='0:15:0', memory='2G'), args)
 
 @task
 def crs_generate_dashboard(config, **args):
