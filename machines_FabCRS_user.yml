@@ -29,7 +29,7 @@ localhost:
   #  - command 2                   # e.g., source ~/.zshrc
 
   home_path_template: "/Users/farznadz/Code/FabSim3/localhost_exe"
-  fabcrs_location: "/Users/farznadzß/Code/FabSim3/plugins/FabCRS"
+  fabcrs_location: "/Users/farznadz/Code/FabSim3/plugins/FabCRS"
 
 supermuc2:
   username: ab12cde
