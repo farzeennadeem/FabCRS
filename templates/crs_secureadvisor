@@ -1,0 +1,25 @@
+# FabCRS SecureAdvisor Template
+cd $job_results
+$run_prefix
+
+RESULTS_GROUP="$results_group"
+RUN_FOLDER="$run"
+JOB_RESULTS="$job_results"
+
+# Resolve the actual run directory
+RESULTS_ROOT="$JOB_RESULTS"
+if [ "$(basename "$JOB_RESULTS")" != "results" ]; then
+  PARENT="$(dirname "$JOB_RESULTS")"
+  if [ "$(basename "$PARENT")" = "results" ]; then
+    RESULTS_ROOT="$PARENT"
+  fi
+fi
+
+RUN_DIR="$RESULTS_ROOT/$RESULTS_GROUP/$RUN_FOLDER"
+
+# Use the centralized location defined in machines_user.yml
+ADVISOR_SCRIPT="$fabcrs_location/secureadvisor.py"
+
+echo "Analyzing results in: $RUN_DIR"
+
+'$virtual_env_path'/bin/python3 "$ADVISOR_SCRIPT" --run-dir "$RUN_DIR"

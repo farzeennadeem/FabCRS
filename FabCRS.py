@@ -65,6 +65,24 @@ def crs_generate_dashboard(config, **args):
     #DONT put_configs here as we are reading existing results
     job(dict(script="crs_db", job_wall_time="0:15:0", memory="2G"), args)
 
+@task
+def secure_advisor(config, **args):
+    """
+    Run SecureAdvisor to suggest fixes for a specific run.
+    Usage: fabsim localhost secure_advisor:<group>,run=<run_folder>
+    """
+    update_environment(args)
+    
+    run_folder = args.get("run")
+    if not run_folder:
+        raise Exception("Please provide run=<run_folder>")
+
+    args["results_group"] = config
+    args["run"] = run_folder
+
+    # Execute the template
+    job(dict(script="secure_advisor", job_wall_time="0:05:0", memory="1G"), args)
+
 # -----------------DUMMY TASK TEMPLATES-------------------------
 @task
 def dummy(config, **args):
