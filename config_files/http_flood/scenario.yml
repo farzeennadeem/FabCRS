@@ -1,3 +1,27 @@
+# HTTP Flood Service Topology
+#
+# This file defines service relationships for traffic simulation.
+#
+# STRUCTURE:
+#   - nodes: service components with capacity and queue attributes
+#   - edges: logical dependencies between services
+#
+# HOW IT WORKS:
+#   - Traffic is directed at the target service (e.g., "web").
+#   - capacity_rps defines max service throughput.
+#   - queue_size defines buffering capacity.
+#   - base_load_rps defines normal traffic.
+#
+# NOTE:
+#   This topology is NOT used for propagation logic.
+#   It models service dependencies and resource behaviour only.
+#
+# MODIFYING THE TOPOLOGY.YML FILE:
+#   - Add additional services under "nodes:".
+#   - Define dependencies under "edges:".
+#   - Multi-tier architectures (LB -> web -> DB) are supported.
+# -------------------------------------------------------------------
+
 scenario_name: http_get_flood_v1
 seed: 42
 
