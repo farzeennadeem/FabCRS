@@ -1,12 +1,11 @@
-# FabDummy
+# FabCRS
 This is a dummy example plugin for FabSim3. It is meant to showcase a minimal implementation for a FabSim3 plugin.
 
 ## Installation
-Simply type `fabsim localhost install_plugin:FabDummy` anywhere inside your FabSim3 install directory.
+Simply type `fabsim localhost install_plugin:FabCRS` anywhere inside your FabSim3 install directory.
 
 ## Testing
 1. To run a dummy job, type `fabsim localhost dummy:dummy_test`.
-2. To run an ensemble of dummy jobs, type `fabsim localhost dummy_ensemble`.
 
 ## Explanation of files
 * FabDummy.py - main file containing the ```fabsim localhost dummy``` command implementation.
@@ -54,10 +53,3 @@ Simply type `fabsim localhost install_plugin:FabDummy` anywhere inside your FabS
 ### Executing an ensemble job on a remote host with replicas
 
 Replicas are jobs that have identical inputs and configurations. Their outputs may be different however, e.g. due to stochastic or non-deterministic aspects of the simulation algorithm. To run each instance of the ensembles with *N* replicated instances, add a `replicas=<N>` to your command. For example, to run a dummy ensemble with 5 replicas each, just use `fabsim <machine name> dummy_ensemble:dummy_test,replicas=5`.
-
-### Using a VECMA Verification and Validation Pattern (VVP) to compare two code versions
-
-FabDummy contains a minimal demonstrator script of VECMA VVP 2, which compares a candidate code version output with that of a stable intermediate form. You can run this little demonstrator by typing:
-
-`fabsim localhost dummy_sif:dummy_test`
-

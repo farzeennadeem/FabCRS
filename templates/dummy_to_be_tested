@@ -1,7 +1,0 @@
-# FabDummy Exec Template: 
-cd $job_results
-$run_prefix
-
-/usr/bin/env > env.log
-echo "Starting dummy job, which will print a number to out.txt."
-echo "1.1" > out.txt

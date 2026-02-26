@@ -14,29 +14,16 @@ except ImportError:
 # Add local script, blackbox and template path.
 add_local_paths("FabCRS")
 
-
-@task
-def start(config, **args):
-    """Submit a Dummy job to the remote queue.
-    The job results will be stored with a name pattern as defined in the environment,
-    e.g. cylinder-abcd1234-legion-256
-    config : config directory to use to define input files, e.g. config=cylinder
-    Keyword arguments:
-            cores : number of compute cores to request
-            images : number of images to take
-            steering : steering session i.d.
-            wall_time : wall-time job limit
-            memory : memory per node
-    """
-    update_environment(args)
-    with_config(config)
-    execute(put_configs, config)
-    job(dict(script='CRS_test', job_wall_time='0:15:0', memory='2G'), args)
-
 @task
 @load_plugin_env_vars("FabCRS")
 def run_crs(config, **args):
-    """Run a CRS simulation using dummy job script."""
+    """
+    Run a CRS simulation using dummy job script.
+    Usage: 
+        fabsim localhost run_crs:<scenario>
+
+        E.g. fabsim localhost run_crs:http_flood
+    """
     update_environment(args)
     with_config(config)
     execute(put_configs, config)
@@ -47,7 +34,9 @@ def crs_generate_dashboard(config, **args):
     """
     Generate dashboard.html for a specific run folder.
     Usage:
-      fabsim localhost crs_generate_dashboard:<group> run=<run_folder>
+      fabsim localhost crs_generate_dashboard:<group>,run=<run_folder>
+
+      E.g. fabsim localhost crs_generate_dashboard:http_flood_localhost_1,run=run_DD_MM_YYYY_HHMMSS
     """
     update_environment(args)
 
@@ -66,10 +55,13 @@ def crs_generate_dashboard(config, **args):
     job(dict(script="crs_db", job_wall_time="0:15:0", memory="2G"), args)
 
 @task
-def secure_advisor(config, **args):
+def crs_secure_advisor(config, **args):
     """
     Run SecureAdvisor to suggest fixes for a specific run.
-    Usage: fabsim localhost secure_advisor:<group>,run=<run_folder>
+    Usage: 
+        fabsim localhost crs_secure_advisor:<group>,run=<run_folder>
+
+        E.g. fabsim localhost crs_secure_advisor:http_flood_localhost_1,run=run_DD_MM_YYYY_HHMMSS
     """
     update_environment(args)
     
@@ -84,6 +76,24 @@ def secure_advisor(config, **args):
     job(dict(script="secure_advisor", job_wall_time="0:05:0", memory="1G"), args)
 
 # -----------------DUMMY TASK TEMPLATES-------------------------
+@task
+def start(config, **args):
+    """Submit a Dummy job to the remote queue.
+    The job results will be stored with a name pattern as defined in the environment,
+    e.g. cylinder-abcd1234-legion-256
+    config : config directory to use to define input files, e.g. config=cylinder
+    Keyword arguments:
+            cores : number of compute cores to request
+            images : number of images to take
+            steering : steering session i.d.
+            wall_time : wall-time job limit
+            memory : memory per node
+    """
+    update_environment(args)
+    with_config(config)
+    execute(put_configs, config)
+    job(dict(script='CRS_test', job_wall_time='0:15:0', memory='2G'), args)
+
 @task
 def dummy(config, **args):
     """Submit a Dummy job to the remote queue.
