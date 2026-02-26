@@ -18,7 +18,7 @@ add_local_paths("FabCRS")
 @load_plugin_env_vars("FabCRS")
 def run_crs(config, **args):
     """
-    Run a CRS simulation using dummy job script.
+    Run a CRS simulation.
     Usage: 
         fabsim localhost run_crs:<scenario>
 
@@ -33,7 +33,7 @@ def run_crs(config, **args):
 @load_plugin_env_vars("FabCRS")
 def crs_generate_dashboard(config, **args):
     """
-    Generate dashboard.html for a specific run folder.
+    Generate dashboard.html for a specific run folder. Run folder name printed in command line when run_crs is executed successfully.
     Usage:
       fabsim localhost crs_generate_dashboard:<group>,run=<run_folder>
 
@@ -58,7 +58,6 @@ def crs_generate_dashboard(config, **args):
 
     print("DEBUG kwargs args =", args)
 
-    #DONT put_configs here as we are reading existing results
     job(dict(script="crs_db", job_wall_time="0:15:0", memory="2G"), args)
 
 @task
@@ -70,6 +69,9 @@ def crs_secure_advisor(config, **args):
         fabsim localhost crs_secure_advisor:<group>,run=<run_folder>
 
         E.g. fabsim localhost crs_secure_advisor:http_flood_localhost_1,run=run_DD_MM_YYYY_HHMMSS
+    
+    Tip:
+        Press 'UP' key in terminal to auto-fill the command with previous arguments, then just change the method name from 'crs_generate_dashboard' to 'crs_secure_advisor'.
     """
     update_environment(args)
     
