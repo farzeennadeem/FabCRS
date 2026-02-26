@@ -30,6 +30,7 @@ def run_crs(config, **args):
     job(dict(script='crs_run', job_wall_time='0:15:0', memory='2G'), args)
 
 @task
+@load_plugin_env_vars("FabCRS")
 def crs_generate_dashboard(config, **args):
     """
     Generate dashboard.html for a specific run folder.
@@ -44,7 +45,13 @@ def crs_generate_dashboard(config, **args):
     if not run_folder:
         raise Exception("Please provide run=<run_folder>, e.g. run=run_DD_MM_YYYY_HHMMSS")
 
-    with_config("http_flood")
+    scenario_parts = config.split("_")
+    if len(scenario_parts) >= 3:
+        scenario_name = "_".join(scenario_parts[:-2])
+    else:
+        scenario_name = config
+
+    with_config(scenario_name)
 
     args["results_group"] = config
     args["run"] = run_folder
@@ -55,6 +62,7 @@ def crs_generate_dashboard(config, **args):
     job(dict(script="crs_db", job_wall_time="0:15:0", memory="2G"), args)
 
 @task
+@load_plugin_env_vars("FabCRS")
 def crs_secure_advisor(config, **args):
     """
     Run SecureAdvisor to suggest fixes for a specific run.
@@ -68,12 +76,20 @@ def crs_secure_advisor(config, **args):
     run_folder = args.get("run")
     if not run_folder:
         raise Exception("Please provide run=<run_folder>")
+    
+    scenario_parts = config.split("_")
+    if len(scenario_parts) >= 3:
+        scenario_name = "_".join(scenario_parts[:-2])
+    else:
+        scenario_name = config
+
+    with_config(scenario_name)
 
     args["results_group"] = config
     args["run"] = run_folder
 
     # Execute the template
-    job(dict(script="secure_advisor", job_wall_time="0:05:0", memory="1G"), args)
+    job(dict(script="crs_secureadvisor", job_wall_time="0:05:0", memory="1G"), args)
 
 # -----------------DUMMY TASK TEMPLATES-------------------------
 @task

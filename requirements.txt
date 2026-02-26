@@ -1,0 +1,10 @@
+# FabCRS Requirements
+
+# YAML parsing for configuration files
+PyYAML>=6.0
+
+# Network graph operations for topology modeling and malware spread simulation
+networkx>=3.0
+
+# Interactive visualization for dashboard generation
+plotly>=5.0
