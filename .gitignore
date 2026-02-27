@@ -109,3 +109,4 @@ results/
 **/run_*/
 *.log
 
+machines_FabCRS_user.yml

@@ -1,11 +1,11 @@
-# Copy this file as machines_user.yml, and fill in your details.
+# Copy this file as machines_FabCRS_user.yml, and fill in your details.
 # Details given in the default dictionary will override default settings in machines.yml
 # Details given in per-machine dictionaries will override machine settings in machines.yml
 
 default:
-  local_results: /Users/farznadz/Code/FabSim3/results
-  local_configs: /Users/farznadz/Code/FabSim3/config_files
-  username: farznadz
+  local_results: /path/to/FabSim3/results
+  local_configs: /path/to/FabSim3/config_files
+  username: your_username
   # home_path_template: "/home/$username"
   # home_path_template: "/Users/$username"  # for OSX users
   manual_gsissh: false # Allows to switch between SSH (default) and GSISSH login.
@@ -13,36 +13,36 @@ default:
   enable_template_cache: false     # Global default
   template_cache_size: 2000        # Optional cache size
 
-  home_path_template: "/Users/farznadz/Code/FabSim3/localhost_exe"
-  virtual_env_path: /Users/farznadz/Code/FabSim3/VirtualEnv
+  home_path_template: /path/to/FabSim3/localhost_exe
+  virtual_env_path: /path/to/FabSim3/VirtualEnv
 localhost:
-  username: farznadz
+  username: your_username
   cores: 1              # Total cores user requests
   corespernode: 1       # Local hardware: 4-8 cores/system
   cpuspertask: 1        # Cores allocated per task
   taskspernode: 1       # Tasks running per system
-  virtual_env_path: /Users/farznadz/Code/FabSim3/VirtualEnv
+  virtual_env_path: /path/to/FabSim3/VirtualEnv
   enable_template_cache: false     # Disable for testing
   template_cache_size: 2000        # Optional cache size
   # run_prefix_commands:           # Startup commands on ssh connection
   #  - command 1                   # e.g., source ~/.bashrc
   #  - command 2                   # e.g., source ~/.zshrc
 
-  home_path_template: "/Users/farznadz/Code/FabSim3/localhost_exe"
-  fabcrs_location: "/Users/farznadz/Code/FabSim3/plugins/FabCRS"
+  home_path_template: /path/to/FabSim3/localhost_exe
+  fabcrs_location: /path/to/FabSim3/plugins/FabCRS
 
 supermuc2:
-  username: ab12cde
-  project: fg34hi
+  username: your_username
+  project: your_project_id
   namd_exec: /lrz/sys/applications/namd/2.10/mpi.ibmP2/namd2
   redispwd: multiple # Password set in the redisexec directory.
   manual_gsissh: true   # Switches to GSISSH login from SSH.
   port: 2222
 
 bluejoule:
-  username: abc12-def01
-  groupname: abc01
-  project: ABC012
+  username: your_username
+  groupname: your_group
+  project: your_project_id
   namd_exec: /gpfs/packages/ibm/namd/2.9/bin/namd2
   ensemble_dir: rep0/replicas
 
@@ -83,7 +83,7 @@ archer2:
   virtual_env_path: /work/<project>/<project>/<username>/VirtualEnv
 
 marenostrum4:
-  username: pr1emk01
+  username: your_username
   fabric_dir: FabSim3
   corespernode: 46
   taskpersocket: 23
@@ -98,4 +98,3 @@ training_hidalgo:
 
 myriad:
   username: <your-UCL-ID>
-  workdir: <specify-a-work-dir>
