@@ -40,7 +40,7 @@ Configure machine paths by copying the template and editing with your details:
 
 ```bash
 cd plugins/FabCRS
-cp machines_FabCRS_user.yml.template machines_FabCRS_user.yml
+cp machines_FabCRS_user_template.yml machines_FabCRS_user.yml
 # Edit machines_FabCRS_user.yml with your paths and username
 ```
 
