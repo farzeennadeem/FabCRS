@@ -20,6 +20,6 @@ RUN_DIR="$RESULTS_ROOT/$RESULTS_GROUP/$RUN_FOLDER"
 # Use the centralized location defined in machines_user.yml
 ADVISOR_SCRIPT="$fabcrs_location/secureadvisor.py"
 
-echo "Analyzing results in: $RUN_DIR"
+echo "Analysing results in: $RUN_DIR"
 
 '$virtual_env_path'/bin/python3 "$ADVISOR_SCRIPT" --run-dir "$RUN_DIR"

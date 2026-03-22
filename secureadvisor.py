@@ -13,7 +13,7 @@ def load_yaml(path: str) -> Dict:
     with open(path, "r") as f:
         return yaml.safe_load(f)
 
-def analyze_http_flood(kpis: Dict, scenario: Dict) -> (List[str], Dict):
+def analyse_http_flood(kpis: Dict, scenario: Dict) -> (List[str], Dict):
     recommendations = []
     patch = {"service_model": {}, "defences": {}}
     
@@ -41,7 +41,7 @@ def analyze_http_flood(kpis: Dict, scenario: Dict) -> (List[str], Dict):
 
     return recommendations, patch
 
-def analyze_malware(kpis: Dict, scenario: Dict) -> (List[str], Dict):
+def analyse_malware(kpis: Dict, scenario: Dict) -> (List[str], Dict):
     recommendations = []
     patch = {"defences": {}}
     
@@ -73,9 +73,9 @@ def main():
     attack_type = kpis.get("attack", {}).get("type", "unknown")
     
     if "malware" in attack_type:
-        recs, patch = analyze_malware(kpis, scenario)
+        recs, patch = analyse_malware(kpis, scenario)
     else:
-        recs, patch = analyze_http_flood(kpis, scenario)
+        recs, patch = analyse_http_flood(kpis, scenario)
 
     # Output 1: recommendations.md
     with open(os.path.join(args.run_dir, "recommendations.md"), "w") as f:
